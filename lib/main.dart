@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       title: 'Threads',
       theme: theme,
       getPages: Routes.pages,
-      initialRoute: RouteNames.home,
+      initialRoute: RouteNames.login,
     );
   }
 }
