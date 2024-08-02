@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
       theme: theme,
       getPages: Routes.pages,
       initialRoute: RouteNames.login,
+      defaultTransition: Transition.noTransition,
     );
   }
 }

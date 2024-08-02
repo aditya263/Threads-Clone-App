@@ -7,7 +7,15 @@ import 'package:threads_clone_app/views/home.dart';
 class Routes {
   static final pages = [
     GetPage(name: RouteNames.home, page: () => const Home()),
-    GetPage(name: RouteNames.login, page: () => const Login()),
-    GetPage(name: RouteNames.register, page: () => const Register()),
+    GetPage(
+      name: RouteNames.login,
+      page: () => const Login(),
+      transition: Transition.fade,
+    ),
+    GetPage(
+      name: RouteNames.register,
+      page: () => const Register(),
+      transition: Transition.fadeIn,
+    ),
   ];
 }
