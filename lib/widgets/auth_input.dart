@@ -6,14 +6,17 @@ class AuthInput extends StatelessWidget {
     required this.label,
     required this.hintText,
     this.isPasswordField = false,
+    required this.controller,
   });
 
   final String label, hintText;
   final bool isPasswordField;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       obscureText: isPasswordField,
       decoration: InputDecoration(
         border: OutlineInputBorder(
