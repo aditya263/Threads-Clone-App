@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:threads_clone_app/routes/route_names.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:threads_clone_app/widgets/auth_input.dart';
 
 class Register extends StatefulWidget {
@@ -19,6 +18,13 @@ class _RegisterState extends State<Register> {
       TextEditingController(text: "");
   final TextEditingController confirmPasswordController =
       TextEditingController(text: "");
+
+  // * Submit method
+  void submit() {
+    if (_form.currentState!.validate()) {
+      print("All Good");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +65,11 @@ class _RegisterState extends State<Register> {
                     controller: nameController,
                     label: 'Name',
                     hintText: 'Enter your name.',
+                    validatorCallback: ValidationBuilder()
+                        .minLength(3)
+                        .maxLength(50)
+                        .required()
+                        .build(),
                   ),
                   const SizedBox(
                     height: 20,
@@ -67,6 +78,8 @@ class _RegisterState extends State<Register> {
                     controller: emailController,
                     label: 'Email',
                     hintText: 'Enter your email.',
+                    validatorCallback:
+                        ValidationBuilder().email().required().build(),
                   ),
                   const SizedBox(
                     height: 20,
@@ -76,6 +89,11 @@ class _RegisterState extends State<Register> {
                     label: 'Password',
                     hintText: 'Enter your password.',
                     isPasswordField: true,
+                    validatorCallback: ValidationBuilder()
+                        .minLength(6)
+                        .maxLength(50)
+                        .required()
+                        .build(),
                   ),
                   const SizedBox(
                     height: 20,
@@ -85,6 +103,12 @@ class _RegisterState extends State<Register> {
                     label: 'Confirm Password',
                     hintText: 'Enter your confirm password.',
                     isPasswordField: true,
+                    validatorCallback: (arg) {
+                      if (passwordController.text.trim() != arg) {
+                        return "Confirm password not match";
+                      }
+                      return null;
+                    },
                   ),
                   const SizedBox(
                     height: 20,
@@ -95,7 +119,7 @@ class _RegisterState extends State<Register> {
                         const Size.fromHeight(40),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: submit,
                     child: const Text("Submit"),
                   ),
                   const SizedBox(

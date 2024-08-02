@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 import 'package:threads_clone_app/routes/route_names.dart';
 import 'package:threads_clone_app/widgets/auth_input.dart';
@@ -16,6 +17,13 @@ class _LoginState extends State<Login> {
   final TextEditingController emailController = TextEditingController(text: "");
   final TextEditingController passwordController =
       TextEditingController(text: "");
+
+  // * Submit method
+  void submit() {
+    if (_form.currentState!.validate()) {
+      print("All Good");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +64,8 @@ class _LoginState extends State<Login> {
                     controller: emailController,
                     label: 'Email',
                     hintText: 'Enter your email.',
+                    validatorCallback:
+                        ValidationBuilder().email().required().build(),
                   ),
                   const SizedBox(
                     height: 20,
@@ -65,6 +75,7 @@ class _LoginState extends State<Login> {
                     label: 'Password',
                     hintText: 'Enter your password.',
                     isPasswordField: true,
+                    validatorCallback: ValidationBuilder().required().build(),
                   ),
                   const SizedBox(
                     height: 20,
@@ -75,7 +86,7 @@ class _LoginState extends State<Login> {
                         const Size.fromHeight(40),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: submit,
                     child: const Text("Submit"),
                   ),
                   const SizedBox(
