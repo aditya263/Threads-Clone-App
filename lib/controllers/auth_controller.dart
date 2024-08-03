@@ -10,7 +10,11 @@ class AuthController extends GetxController {
   var registerLoading = false.obs;
   var loginLoading = false.obs;
 
-  Future<void> register(String name, String email, String password) async {
+  Future<void> register(
+    String name,
+    String email,
+    String password,
+  ) async {
     try {
       registerLoading.value = true;
       final AuthResponse data = await SupabaseService.client.auth.signUp(
@@ -33,7 +37,10 @@ class AuthController extends GetxController {
   }
 
   //* login user
-  Future<void> login(String email, String password) async {
+  Future<void> login(
+    String email,
+    String password,
+  ) async {
     try {
       loginLoading.value = true;
       final AuthResponse response =
