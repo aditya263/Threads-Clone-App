@@ -17,9 +17,20 @@ final ThemeData theme = ThemeData(
     onPrimary: Colors.black,
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ButtonStyle(
-      backgroundColor: MaterialStateProperty.all(Colors.white),
-      foregroundColor: MaterialStateProperty.all(Colors.black),
-    )
-  )
+      style: ButtonStyle(
+    backgroundColor: MaterialStateProperty.all(Colors.white),
+    foregroundColor: MaterialStateProperty.all(Colors.black),
+  )),
+  navigationBarTheme: NavigationBarThemeData(
+    labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+    height: 55,
+    indicatorColor: Colors.transparent,
+    backgroundColor: Colors.black,
+    iconTheme: MaterialStateProperty.all<IconThemeData>(
+      const IconThemeData(
+        color: Colors.white,
+        size: 30,
+      )
+    ),
+  ),
 );

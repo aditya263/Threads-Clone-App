@@ -8,7 +8,7 @@ class Routes {
   static final pages = [
     GetPage(
       name: RouteNames.home,
-      page: () => const Home(),
+      page: () => Home(),
     ),
     GetPage(
       name: RouteNames.login,
