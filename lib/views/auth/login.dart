@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
+import 'package:threads_clone_app/controllers/auth_controller.dart';
 import 'package:threads_clone_app/routes/route_names.dart';
 import 'package:threads_clone_app/widgets/auth_input.dart';
 
@@ -18,10 +19,15 @@ class _LoginState extends State<Login> {
   final TextEditingController passwordController =
       TextEditingController(text: "");
 
+  final AuthController controller = Get.put(AuthController());
+
   // * Submit method
   void submit() {
     if (_form.currentState!.validate()) {
-      print("All Good");
+      controller.login(
+        emailController.text.trim(),
+        passwordController.text.trim(),
+      );
     }
   }
 
@@ -80,15 +86,21 @@ class _LoginState extends State<Login> {
                   const SizedBox(
                     height: 20,
                   ),
-                  ElevatedButton(
-                    style: ButtonStyle(
-                      minimumSize: MaterialStateProperty.all(
-                        const Size.fromHeight(40),
+                  Obx(() {
+                    return ElevatedButton(
+                      style: ButtonStyle(
+                        minimumSize: MaterialStateProperty.all(
+                          const Size.fromHeight(40),
+                        ),
                       ),
-                    ),
-                    onPressed: submit,
-                    child: const Text("Submit"),
-                  ),
+                      onPressed: submit,
+                      child: Text(
+                        controller.loginLoading.value
+                            ? "Processing..."
+                            : "Submit",
+                      ),
+                    );
+                  }),
                   const SizedBox(
                     height: 20,
                   ),

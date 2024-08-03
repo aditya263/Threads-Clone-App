@@ -1,6 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
+import 'package:get/get.dart';
+import 'package:threads_clone_app/controllers/auth_controller.dart';
 import 'package:threads_clone_app/widgets/auth_input.dart';
 
 class Register extends StatefulWidget {
@@ -19,10 +21,16 @@ class _RegisterState extends State<Register> {
   final TextEditingController confirmPasswordController =
       TextEditingController(text: "");
 
+  final AuthController controller = Get.put(AuthController());
+
   // * Submit method
   void submit() {
     if (_form.currentState!.validate()) {
-      print("All Good");
+      controller.register(
+        nameController.text.trim(),
+        emailController.text.trim(),
+        passwordController.text.trim(),
+      );
     }
   }
 
@@ -113,14 +121,20 @@ class _RegisterState extends State<Register> {
                   const SizedBox(
                     height: 20,
                   ),
-                  ElevatedButton(
-                    style: ButtonStyle(
-                      minimumSize: MaterialStateProperty.all(
-                        const Size.fromHeight(40),
+                  Obx(
+                    () => ElevatedButton(
+                      style: ButtonStyle(
+                        minimumSize: MaterialStateProperty.all(
+                          const Size.fromHeight(40),
+                        ),
+                      ),
+                      onPressed: submit,
+                      child: Text(
+                        controller.registerLoading.value
+                            ? "Processing..."
+                            : "Submit",
                       ),
                     ),
-                    onPressed: submit,
-                    child: const Text("Submit"),
                   ),
                   const SizedBox(
                     height: 20,
