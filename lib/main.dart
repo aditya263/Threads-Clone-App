@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:threads_clone_app/routes/route.dart';
 import 'package:threads_clone_app/routes/route_names.dart';
+import 'package:threads_clone_app/services/storage_service.dart';
 import 'package:threads_clone_app/services/supabase_service.dart';
 import 'package:threads_clone_app/theme/theme.dart';
 
@@ -25,7 +26,9 @@ class MyApp extends StatelessWidget {
       title: 'Threads',
       theme: theme,
       getPages: Routes.pages,
-      initialRoute: RouteNames.login,
+      initialRoute: StorageService.userSession != null
+          ? RouteNames.home
+          : RouteNames.login,
       defaultTransition: Transition.noTransition,
     );
   }
