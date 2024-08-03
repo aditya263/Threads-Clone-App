@@ -3,6 +3,7 @@ import 'package:threads_clone_app/routes/route_names.dart';
 import 'package:threads_clone_app/views/auth/login.dart';
 import 'package:threads_clone_app/views/auth/register.dart';
 import 'package:threads_clone_app/views/home.dart';
+import 'package:threads_clone_app/views/profile/edit_profile.dart';
 
 class Routes {
   static final pages = [
@@ -19,6 +20,11 @@ class Routes {
       name: RouteNames.register,
       page: () => const Register(),
       transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: RouteNames.editProfile,
+      page: () => const EditProfile(),
+      transition: Transition.leftToRight,
     ),
   ];
 }

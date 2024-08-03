@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:threads_clone_app/routes/route_names.dart';
 import 'package:threads_clone_app/utils/styles/button_styles.dart';
 
 class Profile extends StatefulWidget {
@@ -71,7 +72,9 @@ class _ProfileState extends State<Profile> {
                         children: [
                           Expanded(
                             child: OutlinedButton(
-                              onPressed: () {},
+                              onPressed: () => Get.toNamed(
+                                RouteNames.editProfile,
+                              ),
                               style: customOutlineStyle(),
                               child: const Text("Edit Profile"),
                             ),
