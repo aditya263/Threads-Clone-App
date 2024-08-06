@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:threads_clone_app/controllers/profile_controller.dart';
 import 'package:threads_clone_app/routes/route_names.dart';
+import 'package:threads_clone_app/services/supabase_service.dart';
 import 'package:threads_clone_app/utils/styles/button_styles.dart';
+import 'package:threads_clone_app/widgets/circle_image.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -11,6 +14,9 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  final ProfileController controller = Get.put(ProfileController());
+  final SupabaseService supabaseService = Get.find<SupabaseService>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,29 +46,34 @@ class _ProfileState extends State<Profile> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                "Aditya",
-                                style: TextStyle(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold,
+                          Obx(() {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  supabaseService
+                                      .currentUser.value!.userMetadata?["name"],
+                                  style: const TextStyle(
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: context.width * 0.7,
-                                child: const Text(
-                                  "Let's build threads clone in flutter.",
+                                SizedBox(
+                                  width: context.width * 0.7,
+                                  child: Text(
+                                    supabaseService.currentUser.value
+                                            ?.userMetadata?["description"] ??
+                                        "Threads Clone App",
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          const CircleAvatar(
+                              ],
+                            );
+                          }),
+                          CircleImage(
                             radius: 40,
-                            backgroundImage:
-                                AssetImage("assets/images/avatar.png"),
-                          )
+                            url: supabaseService
+                                .currentUser.value!.userMetadata?["image"],
+                          ),
                         ],
                       ),
                       const SizedBox(
