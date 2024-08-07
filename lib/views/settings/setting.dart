@@ -19,14 +19,19 @@ class Setting extends StatelessWidget {
           children: [
             ListTile(
               onTap: () {
-                confirmBox("Are you sure?", "Do you want to logout ?", () {
-                  controller.logout();
-                });
+                confirmBox(
+                  "Are you sure?",
+                  "Do you want to logout?",
+                  () async {
+                    controller.logout();
+                  },
+                  controller.logoutLoading,
+                );
               },
               leading: const Icon(Icons.logout),
               title: const Text("Logout"),
               trailing: const Icon(Icons.arrow_forward),
-            )
+            ),
           ],
         ),
       ),

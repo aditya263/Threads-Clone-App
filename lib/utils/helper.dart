@@ -52,12 +52,18 @@ String getS3Url(String path) {
 }
 
 // * Confirm box
-void confirmBox(String title, String text, VoidCallback callback) {
+void confirmBox(
+  String title,
+  String text,
+  VoidCallback callback,
+  RxBool isLoading,
+) {
   Get.dialog(
     ConfirmBox(
       title: title,
       text: text,
       callback: callback,
+      isLoading: isLoading,
     ),
   );
 }
