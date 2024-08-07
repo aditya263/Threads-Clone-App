@@ -25,7 +25,7 @@ class _ProfileState extends State<Profile> {
         centerTitle: false,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () => Get.toNamed(RouteNames.settings),
             icon: const Icon(Icons.sort),
           ),
         ],
@@ -62,7 +62,7 @@ class _ProfileState extends State<Profile> {
                                   width: context.width * 0.7,
                                   child: Text(
                                     supabaseService.currentUser.value
-                                        ?.userMetadata?["description"] ??
+                                            ?.userMetadata?["description"] ??
                                         "Threads Clone App",
                                   ),
                                 ),
@@ -85,10 +85,9 @@ class _ProfileState extends State<Profile> {
                         children: [
                           Expanded(
                             child: OutlinedButton(
-                              onPressed: () =>
-                                  Get.toNamed(
-                                    RouteNames.editProfile,
-                                  ),
+                              onPressed: () => Get.toNamed(
+                                RouteNames.editProfile,
+                              ),
                               style: customOutlineStyle(),
                               child: const Text("Edit Profile"),
                             ),
@@ -153,8 +152,8 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   double get minExtent => _tabBar.preferredSize.height;
 
   @override
-  Widget build(BuildContext context, double shrinkOffset,
-      bool overlapsContent) {
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
       color: Colors.black,
       child: _tabBar,
