@@ -26,7 +26,9 @@ class CircleImage extends StatelessWidget {
           )
         else if (url != null)
           CircleAvatar(
-            backgroundImage: NetworkImage(getS3Url(url!)),
+            backgroundImage: NetworkImage(
+              "${getS3Url(url!)}?t=${DateTime.now().millisecondsSinceEpoch}",
+            ),
             radius: radius,
           )
         else

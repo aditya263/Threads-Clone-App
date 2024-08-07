@@ -62,18 +62,20 @@ class _ProfileState extends State<Profile> {
                                   width: context.width * 0.7,
                                   child: Text(
                                     supabaseService.currentUser.value
-                                            ?.userMetadata?["description"] ??
+                                        ?.userMetadata?["description"] ??
                                         "Threads Clone App",
                                   ),
                                 ),
                               ],
                             );
                           }),
-                          CircleImage(
-                            radius: 40,
-                            url: supabaseService
-                                .currentUser.value!.userMetadata?["image"],
-                          ),
+                          Obx(() {
+                            return CircleImage(
+                              radius: 40,
+                              url: supabaseService
+                                  .currentUser.value!.userMetadata?["image"],
+                            );
+                          }),
                         ],
                       ),
                       const SizedBox(
@@ -83,9 +85,10 @@ class _ProfileState extends State<Profile> {
                         children: [
                           Expanded(
                             child: OutlinedButton(
-                              onPressed: () => Get.toNamed(
-                                RouteNames.editProfile,
-                              ),
+                              onPressed: () =>
+                                  Get.toNamed(
+                                    RouteNames.editProfile,
+                                  ),
                               style: customOutlineStyle(),
                               child: const Text("Edit Profile"),
                             ),
@@ -150,8 +153,8 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   double get minExtent => _tabBar.preferredSize.height;
 
   @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(BuildContext context, double shrinkOffset,
+      bool overlapsContent) {
     return Container(
       color: Colors.black,
       child: _tabBar,

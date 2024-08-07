@@ -25,6 +25,7 @@ class _EditProfileState extends State<EditProfile> {
           supabaseService.currentUser.value?.userMetadata?["description"];
       super.initState();
     }
+    controller.image.value = null;
   }
 
   @override
