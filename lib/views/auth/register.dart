@@ -23,6 +23,15 @@ class _RegisterState extends State<Register> {
 
   final AuthController controller = Get.put(AuthController());
 
+  @override
+  void dispose() {
+    emailController.dispose();
+    nameController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
+  }
+
   // * Submit method
   void submit() {
     if (_form.currentState!.validate()) {

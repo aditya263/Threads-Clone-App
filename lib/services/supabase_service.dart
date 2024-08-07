@@ -12,6 +12,7 @@ class SupabaseService extends GetxService {
       anonKey: Env.supabasekey,
     );
     currentUser.value = client.auth.currentUser;
+    listenAuthChanges();
     super.onInit();
   }
 

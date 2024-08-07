@@ -38,6 +38,7 @@ class ProfileController extends GetxController {
         ),
       );
       loading.value = false;
+      Get.back();
       showSnackBar("Success", "Profile updated successfully!");
     } on StorageException catch (error) {
       loading.value = false;

@@ -19,9 +19,12 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   void initState() {
-    textEditingController.text =
-        supabaseService.currentUser.value?.userMetadata?["description"];
-    super.initState();
+    if (supabaseService.currentUser.value?.userMetadata?["description"] !=
+        null) {
+      textEditingController.text =
+          supabaseService.currentUser.value?.userMetadata?["description"];
+      super.initState();
+    }
   }
 
   @override
@@ -36,10 +39,21 @@ class _EditProfileState extends State<EditProfile> {
       appBar: AppBar(
         title: const Text("Edit Profile"),
         actions: [
-          TextButton(
-            onPressed: () {},
-            child: const Text("Done"),
-          ),
+          Obx(() {
+            return TextButton(
+              onPressed: () {
+                controller.updateProfile(supabaseService.currentUser.value!.id,
+                    textEditingController.text.trim());
+              },
+              child: controller.loading.value
+                  ? const SizedBox(
+                      height: 14,
+                      width: 14,
+                      child: CircularProgressIndicator(),
+                    )
+                  : const Text("Done"),
+            );
+          }),
         ],
       ),
       body: SingleChildScrollView(
