@@ -19,7 +19,7 @@ class AddThread extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const AddThreadAppBar(),
+              AddThreadAppBar(),
               const SizedBox(
                 height: 10,
               ),

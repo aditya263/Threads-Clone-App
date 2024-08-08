@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:threads_clone_app/controllers/thread_controller.dart';
+import 'package:threads_clone_app/services/navigation_service.dart';
+import 'package:threads_clone_app/services/supabase_service.dart';
 
 class AddThreadAppBar extends StatelessWidget {
-  const AddThreadAppBar({super.key});
+  AddThreadAppBar({super.key});
+
+  final ThreadController controller = Get.find<ThreadController>();
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +26,9 @@ class AddThreadAppBar extends StatelessWidget {
           Row(
             children: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.find<NavigationService>().backToPrevPage();
+                },
                 icon: const Icon(Icons.close),
               ),
               const SizedBox(
@@ -34,15 +42,31 @@ class AddThreadAppBar extends StatelessWidget {
               ),
             ],
           ),
-          TextButton(
-            onPressed: () {},
-            child: const Text(
-              "Post",
-              style: TextStyle(
-                fontSize: 15,
-              ),
-            ),
-          )
+          Obx(() {
+            return TextButton(
+              onPressed: () {
+                if (controller.content.value.isNotEmpty) {
+                  controller
+                      .store(Get.find<SupabaseService>().currentUser.value!.id);
+                }
+              },
+              child: controller.loading.value
+                  ? const SizedBox(
+                      height: 16,
+                      width: 16,
+                      child: CircularProgressIndicator.adaptive(),
+                    )
+                  : Text(
+                      "Post",
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: controller.content.value.isNotEmpty
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                      ),
+                    ),
+            );
+          })
         ],
       ),
     );
