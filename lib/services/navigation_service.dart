@@ -15,7 +15,7 @@ class NavigationService extends GetxService {
     return [
       const HomePage(),
       const Search(),
-      const AddThread(),
+      AddThread(),
       const Notifications(),
       const Profile(),
     ];
