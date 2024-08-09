@@ -4,6 +4,7 @@ import 'package:threads_clone_app/views/auth/login.dart';
 import 'package:threads_clone_app/views/auth/register.dart';
 import 'package:threads_clone_app/views/home.dart';
 import 'package:threads_clone_app/views/profile/edit_profile.dart';
+import 'package:threads_clone_app/views/replies/add_reply.dart';
 import 'package:threads_clone_app/views/settings/setting.dart';
 
 class Routes {
@@ -31,6 +32,11 @@ class Routes {
       name: RouteNames.settings,
       page: () => Setting(),
       transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: RouteNames.addReply,
+      page: () => AddReply(),
+      transition: Transition.downToUp,
     ),
   ];
 }
