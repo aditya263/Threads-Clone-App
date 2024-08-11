@@ -5,4 +5,5 @@ class RouteNames {
   static String editProfile = "/editProfile";
   static String settings = "/settings";
   static String addReply = "/addReply";
+  static String showThread = "/showThread";
 }

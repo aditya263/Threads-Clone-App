@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:threads_clone_app/models/post_model.dart';
+import 'package:threads_clone_app/routes/route_names.dart';
 import 'package:threads_clone_app/widgets/circle_image.dart';
 import 'package:threads_clone_app/widgets/post_card_bottom_bar.dart';
 import 'package:threads_clone_app/widgets/post_card_image.dart';
@@ -37,7 +38,15 @@ class PostCard extends StatelessWidget {
                     PostTopBar(
                       post: post,
                     ),
-                    Text(post.content!),
+                    GestureDetector(
+                      onTap: () => {
+                        Get.toNamed(
+                          RouteNames.showThread,
+                          arguments: post.id,
+                        ),
+                      },
+                      child: Text(post.content!),
+                    ),
                     const SizedBox(
                       height: 10,
                     ),
