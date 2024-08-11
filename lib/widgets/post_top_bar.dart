@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:threads_clone_app/models/post_model.dart';
+import 'package:threads_clone_app/utils/helper.dart';
 
 class PostTopBar extends StatelessWidget {
   const PostTopBar({
@@ -20,13 +21,13 @@ class PostTopBar extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        const Row(
+        Row(
           children: [
-            Text("9 hours ago"),
-            SizedBox(
+            Text(formateDateFromNow(post.createdAt!)),
+            const SizedBox(
               width: 10,
             ),
-            Icon(Icons.more_horiz),
+            const Icon(Icons.more_horiz),
           ],
         )
       ],
