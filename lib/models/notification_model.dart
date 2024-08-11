@@ -1,33 +1,27 @@
 import 'package:threads_clone_app/models/user_model.dart';
 
-class PostModel {
+class NotificationModel {
   int? id;
-  String? content;
-  String? image;
+  int? postId;
+  String? notification;
   String? createdAt;
-  int? commentCount;
-  int? likeCount;
   String? userId;
   User? user;
 
-  PostModel({
+  NotificationModel({
     this.id,
-    this.content,
-    this.image,
+    this.postId,
+    this.notification,
     this.createdAt,
-    this.commentCount,
-    this.likeCount,
     this.userId,
     this.user,
   });
 
-  PostModel.fromJson(Map<String, dynamic> json) {
+  NotificationModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    content = json['content'];
-    image = json['image'];
+    postId = json['post_id'];
+    notification = json['notification'];
     createdAt = json['created_at'];
-    commentCount = json['comment_count'];
-    likeCount = json['like_count'];
     userId = json['user_id'];
     user = json['user'] != null ? User.fromJson(json['user']) : null;
   }
@@ -35,11 +29,9 @@ class PostModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
-    data['content'] = content;
-    data['image'] = image;
+    data['post_id'] = postId;
+    data['notification'] = notification;
     data['created_at'] = createdAt;
-    data['comment_count'] = commentCount;
-    data['like_count'] = likeCount;
     data['user_id'] = userId;
     if (user != null) {
       data['user'] = user!.toJson();

@@ -2,7 +2,10 @@ class User {
   String? email;
   Metadata? metadata;
 
-  User({this.email, this.metadata});
+  User({
+    this.email,
+    this.metadata,
+  });
 
   User.fromJson(Map<String, dynamic> json) {
     email = json['email'];
@@ -29,14 +32,15 @@ class Metadata {
   bool? emailVerified;
   bool? phoneVerified;
 
-  Metadata(
-      {this.sub,
-      this.name,
-      this.email,
-      this.image,
-      this.description,
-      this.emailVerified,
-      this.phoneVerified});
+  Metadata({
+    this.sub,
+    this.name,
+    this.email,
+    this.image,
+    this.description,
+    this.emailVerified,
+    this.phoneVerified,
+  });
 
   Metadata.fromJson(Map<String, dynamic> json) {
     sub = json['sub'];

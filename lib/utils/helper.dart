@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:threads_clone_app/utils/env.dart';
 import 'package:threads_clone_app/widgets/confirm_box.dart';
 import 'package:uuid/uuid.dart';
@@ -66,4 +67,14 @@ void confirmBox(
       isLoading: isLoading,
     ),
   );
+}
+
+// * Format Date
+String formateDateFromNow(String date) {
+  //Parse UTC timestamp to DateTime
+  DateTime utcDateTime = DateTime.parse(date.split("+")[0].trim());
+
+  //* Convert UTC to IST
+  DateTime isDateTime = utcDateTime.add(const Duration(hours: 5, minutes: 30));
+  return Jiffy.parseFromDateTime(isDateTime).fromNow();
 }
