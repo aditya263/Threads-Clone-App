@@ -5,6 +5,8 @@ import 'package:threads_clone_app/routes/route_names.dart';
 import 'package:threads_clone_app/services/supabase_service.dart';
 import 'package:threads_clone_app/utils/styles/button_styles.dart';
 import 'package:threads_clone_app/widgets/circle_image.dart';
+import 'package:threads_clone_app/widgets/loading.dart';
+import 'package:threads_clone_app/widgets/post_card.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -16,6 +18,15 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   final ProfileController controller = Get.put(ProfileController());
   final SupabaseService supabaseService = Get.find<SupabaseService>();
+
+  @override
+  void initState() {
+    if (supabaseService.currentUser.value?.id != null) {
+      controller.fetchUserThreads(supabaseService.currentUser.value!.id);
+      controller.fetchReplies(supabaseService.currentUser.value!.id);
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -127,10 +138,34 @@ class _ProfileState extends State<Profile> {
               ),
             ];
           },
-          body: const TabBarView(
+          body: TabBarView(
             children: [
-              Text("I am Threads"),
-              Text("I am Replies"),
+              Obx(() => SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        if (controller.postLoading.value)
+                          const Loading()
+                        else if (controller.posts.isNotEmpty)
+                          ListView.builder(
+                            itemCount: controller.posts.length,
+                            shrinkWrap: true,
+                            physics: const BouncingScrollPhysics(),
+                            itemBuilder: (BuildContext context, int index) =>
+                                PostCard(
+                              post: controller.posts[index],
+                            ),
+                          )
+                        else
+                          const Center(
+                            child: Text("No thread found!"),
+                          )
+                      ],
+                    ),
+                  )),
+              const Text("I am Replies"),
             ],
           ),
         ),
