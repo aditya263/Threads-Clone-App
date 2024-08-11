@@ -5,6 +5,7 @@ import 'package:threads_clone_app/routes/route_names.dart';
 import 'package:threads_clone_app/services/supabase_service.dart';
 import 'package:threads_clone_app/utils/styles/button_styles.dart';
 import 'package:threads_clone_app/widgets/circle_image.dart';
+import 'package:threads_clone_app/widgets/reply_card.dart';
 import 'package:threads_clone_app/widgets/loading.dart';
 import 'package:threads_clone_app/widgets/post_card.dart';
 
@@ -165,7 +166,32 @@ class _ProfileState extends State<Profile> {
                       ],
                     ),
                   )),
-              const Text("I am Replies"),
+              Obx(() => SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        if (controller.replyLoading.value)
+                          const Loading()
+                        else if (controller.replies.isNotEmpty)
+                          ListView.builder(
+                            itemCount: controller.replies.length,
+                            shrinkWrap: true,
+                            physics: const BouncingScrollPhysics(),
+                            itemBuilder: (BuildContext context, int index) =>
+                                ReplyCard(
+                              reply: controller.replies[index],
+                            ),
+                          )
+                        else
+                          const Center(
+                            child: Text("No reply found!"),
+                          )
+                      ],
+                    ),
+                  )),
             ],
           ),
         ),
