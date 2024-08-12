@@ -6,7 +6,7 @@ class ReplyModel {
   int? postId;
   String? reply;
   String? createdAt;
-  User? user;
+  UserModel? user;
 
   ReplyModel({
     this.id,
@@ -23,7 +23,7 @@ class ReplyModel {
     postId = json['post_id'];
     reply = json['reply'];
     createdAt = json['created_at'];
-    user = json['user'] != null ? User.fromJson(json['user']) : null;
+    user = json['user'] != null ? UserModel.fromJson(json['user']) : null;
   }
 
   Map<String, dynamic> toJson() {

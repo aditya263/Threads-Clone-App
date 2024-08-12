@@ -8,7 +8,7 @@ class PostModel {
   int? commentCount;
   int? likeCount;
   String? userId;
-  User? user;
+  UserModel? user;
 
   PostModel({
     this.id,
@@ -29,7 +29,7 @@ class PostModel {
     commentCount = json['comment_count'];
     likeCount = json['like_count'];
     userId = json['user_id'];
-    user = json['user'] != null ? User.fromJson(json['user']) : null;
+    user = json['user'] != null ? UserModel.fromJson(json['user']) : null;
   }
 
   Map<String, dynamic> toJson() {
