@@ -100,6 +100,46 @@ class ThreadController extends GetxController {
     }
   }
 
+  // * to like & dislike
+  Future<void> likeDislike(
+    String status,
+    int postId,
+    String postUserId,
+    String userId,
+  ) async {
+    if (status == "1") {
+      await SupabaseService.client
+          .from("likes")
+          .insert({"user_id": userId, "post_id": postId});
+
+      //Increase the post comment count
+      await SupabaseService.client.rpc("like_increment", params: {
+        "count": 1,
+        "row_id": postId,
+      });
+
+      //Add a notification
+      await SupabaseService.client.from("notifications").insert({
+        "user_id": userId,
+        "notification": "liked on your post",
+        "to_user_id": postUserId,
+        "post_id": postId,
+      });
+    } else {
+      // * Delete entry from like table
+      await SupabaseService.client
+          .from("likes")
+          .delete()
+          .match({"user_id": userId, "post_id": postId});
+
+      // * Decrement post count
+      await SupabaseService.client.rpc("like_decrement", params: {
+        "count": 1,
+        "row_id": postId,
+      });
+    }
+  }
+
   //To reset thread state
   void resetState() {
     content.value = "";
