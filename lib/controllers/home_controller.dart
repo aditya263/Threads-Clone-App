@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:threads_clone_app/models/post_model.dart';
 import 'package:threads_clone_app/services/supabase_service.dart';
@@ -17,9 +19,9 @@ class HomeController extends GetxController {
     try {
       loading.value = true;
       final List<dynamic> response =
-      await SupabaseService.client.from("posts").select('''
+          await SupabaseService.client.from("posts").select('''
     id,content,image,created_at,comment_count,like_count,user_id,
-    user:user_id(email,metadata)
+    user:user_id(email,metadata), likes:likes(user_id,post_id)
     ''').order("id", ascending: false);
       loading.value = false;
       if (response.isNotEmpty) {

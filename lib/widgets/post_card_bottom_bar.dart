@@ -26,6 +26,9 @@ class _PostCardBottomBarState extends State<PostCardBottomBar> {
     setState(() {
       likeStatus = status;
     });
+    if (likeStatus == "0") {
+      widget.post.likes = [];
+    }
     await controller.likeDislike(
       status,
       widget.post.id!,
@@ -40,7 +43,7 @@ class _PostCardBottomBarState extends State<PostCardBottomBar> {
       children: [
         Row(
           children: [
-            likeStatus == "1"
+            likeStatus == "1" || widget.post.likes!.isNotEmpty
                 ? IconButton(
                     onPressed: () {
                       likeDislike("0");

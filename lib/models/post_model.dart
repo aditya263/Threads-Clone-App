@@ -1,3 +1,4 @@
+import 'package:threads_clone_app/models/likes_model.dart';
 import 'package:threads_clone_app/models/user_model.dart';
 
 class PostModel {
@@ -9,6 +10,7 @@ class PostModel {
   int? likeCount;
   String? userId;
   UserModel? user;
+  List<LikesModel>? likes;
 
   PostModel({
     this.id,
@@ -19,6 +21,7 @@ class PostModel {
     this.likeCount,
     this.userId,
     this.user,
+    this.likes,
   });
 
   PostModel.fromJson(Map<String, dynamic> json) {
@@ -30,6 +33,12 @@ class PostModel {
     likeCount = json['like_count'];
     userId = json['user_id'];
     user = json['user'] != null ? UserModel.fromJson(json['user']) : null;
+    if (json["likes"] != null) {
+      likes = <LikesModel>[];
+      json["likes"].forEach((v) {
+        likes!.add(LikesModel.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
