@@ -71,7 +71,7 @@ class ProfileController extends GetxController {
       final List<dynamic> response =
           await SupabaseService.client.from("posts").select('''
     id,content,image,created_at,comment_count,like_count,user_id,
-    user:user_id(email,metadata)
+    user:user_id(email,metadata), likes:likes(user_id,post_id)
     ''').eq("user_id", userId).order("id", ascending: false);
       postLoading.value = false;
       if (response.isNotEmpty) {

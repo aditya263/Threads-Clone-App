@@ -50,6 +50,14 @@ class HomeController extends GetxController {
               final PostModel post = PostModel.fromJson(payload.newRecord);
               updateFeed(post);
             })
+        .onPostgresChanges(
+            event: PostgresChangeEvent.delete,
+            schema: 'public',
+            table: 'posts',
+            callback: (payload) {
+              posts.removeWhere(
+                  (element) => element.id == payload.oldRecord["id"]);
+            })
         .subscribe();
   }
 
