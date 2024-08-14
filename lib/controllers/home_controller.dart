@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:threads_clone_app/models/post_model.dart';
+import 'package:threads_clone_app/models/user_model.dart';
 import 'package:threads_clone_app/services/supabase_service.dart';
 import 'package:threads_clone_app/utils/helper.dart';
 
@@ -12,6 +14,7 @@ class HomeController extends GetxController {
   @override
   void onInit() async {
     await fetchThreads();
+    listenChanges();
     super.onInit();
   }
 
@@ -31,5 +34,35 @@ class HomeController extends GetxController {
       loading.value = false;
       showSnackBar("Error", "Something went wrong!");
     }
+  }
+
+  // * Listen realtime threads changes
+
+  void listenChanges() async {
+    SupabaseService.client
+        .channel('public:posts')
+        .onPostgresChanges(
+            event: PostgresChangeEvent.insert,
+            schema: 'public',
+            table: 'posts',
+            callback: (payload) {
+              print('Change received: ${payload.toString()}');
+              final PostModel post = PostModel.fromJson(payload.newRecord);
+              updateFeed(post);
+            })
+        .subscribe();
+  }
+
+  // * To update the feed
+  void updateFeed(PostModel post) async {
+    var user = await SupabaseService.client
+        .from("users")
+        .select("*")
+        .eq("id", post.userId!)
+        .single();
+
+    post.likes = [];
+    post.user = UserModel.fromJson(user);
+    posts.insert(0, post);
   }
 }
