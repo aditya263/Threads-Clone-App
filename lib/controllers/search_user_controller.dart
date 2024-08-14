@@ -21,9 +21,11 @@ class SearchUserController extends GetxController {
             .select("*")
             .ilike("metadata->>name", "%$name%");
         loading.value = false;
+        print(data);
         if (data.isNotEmpty) {
           users.value = [for (var item in data) UserModel.fromJson(item)];
         } else {
+          users.clear();
           notFound.value = true;
         }
       }
