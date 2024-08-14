@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:threads_clone_app/models/post_model.dart';
@@ -46,7 +44,6 @@ class HomeController extends GetxController {
             schema: 'public',
             table: 'posts',
             callback: (payload) {
-              print('Change received: ${payload.toString()}');
               final PostModel post = PostModel.fromJson(payload.newRecord);
               updateFeed(post);
             })

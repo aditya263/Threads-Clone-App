@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:threads_clone_app/models/post_model.dart';
+import 'package:threads_clone_app/routes/route_names.dart';
 import 'package:threads_clone_app/utils/helper.dart';
 
 class PostTopBar extends StatelessWidget {
@@ -15,10 +17,13 @@ class PostTopBar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          post.user!.metadata!.name!,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
+        GestureDetector(
+          onTap: () => Get.toNamed(RouteNames.showUser, arguments: post.userId),
+          child: Text(
+            post.user!.metadata!.name!,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         Row(

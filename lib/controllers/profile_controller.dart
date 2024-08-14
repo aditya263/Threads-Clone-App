@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:threads_clone_app/models/post_model.dart';
 import 'package:threads_clone_app/models/reply_model.dart';
+import 'package:threads_clone_app/models/user_model.dart';
 import 'package:threads_clone_app/services/supabase_service.dart';
 import 'package:threads_clone_app/utils/env.dart';
 import 'package:threads_clone_app/utils/helper.dart';
@@ -14,6 +15,9 @@ class ProfileController extends GetxController {
   RxList<PostModel> posts = RxList<PostModel>();
   var replyLoading = false.obs;
   RxList<ReplyModel> replies = RxList<ReplyModel>();
+
+  var userLoading = false.obs;
+  Rx<UserModel> user = Rx<UserModel>(UserModel());
 
   //*Update Profile method
   Future<void> updateProfile(String userId, String description) async {
@@ -62,6 +66,26 @@ class ProfileController extends GetxController {
   void pickImage() async {
     File? file = await pickImageFromGallery();
     if (file != null) image.value = file;
+  }
+
+  // * Fetch User
+  void fetchUser(String userId) async {
+    try {
+      userLoading.value = true;
+      final res = await SupabaseService.client
+          .from("users")
+          .select("*")
+          .eq("id", userId)
+          .single();
+      userLoading.value = false;
+      user.value = UserModel.fromJson(res);
+      // * Fetch user threads and replies
+      fetchUserThreads(userId);
+      fetchReplies(userId);
+    } catch (e) {
+      userLoading.value = false;
+      showSnackBar("Error", "Something went wrong!");
+    }
   }
 
   // * Fetch Post

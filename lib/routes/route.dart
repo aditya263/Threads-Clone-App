@@ -4,6 +4,7 @@ import 'package:threads_clone_app/views/auth/login.dart';
 import 'package:threads_clone_app/views/auth/register.dart';
 import 'package:threads_clone_app/views/home.dart';
 import 'package:threads_clone_app/views/profile/edit_profile.dart';
+import 'package:threads_clone_app/views/profile/show_user.dart';
 import 'package:threads_clone_app/views/replies/add_reply.dart';
 import 'package:threads_clone_app/views/settings/setting.dart';
 import 'package:threads_clone_app/views/thread/show_image.dart';
@@ -48,6 +49,11 @@ class Routes {
     GetPage(
       name: RouteNames.showImage,
       page: () => ShowImage(),
+      transition: Transition.leftToRight,
+    ),
+    GetPage(
+      name: RouteNames.showUser,
+      page: () => const ShowUser(),
       transition: Transition.leftToRight,
     ),
   ];
