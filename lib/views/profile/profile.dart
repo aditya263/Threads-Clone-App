@@ -157,6 +157,8 @@ class _ProfileState extends State<Profile> {
                             itemBuilder: (BuildContext context, int index) =>
                                 PostCard(
                               post: controller.posts[index],
+                              isAuthCard: true,
+                              callback: controller.deleteThread,
                             ),
                           )
                         else
@@ -167,7 +169,7 @@ class _ProfileState extends State<Profile> {
                     ),
                   )),
               Obx(() => SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(vertical: 10),
+                    padding: const EdgeInsets.symmetric(vertical: 10),
                     child: Column(
                       children: [
                         const SizedBox(
